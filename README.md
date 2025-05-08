@@ -1,16 +1,9 @@
-# yt
+# Youtube Clone
 
-A new Flutter project.
+Flutter Youtube Clone Firebase and Riverpod State Management
 
-## Getting Started
+## Hosting
 
-This project is a starting point for a Flutter application.
+This project is primarily hosted on Firebase for Authentication and Cloud Firestore. For Image and Video database Cloudinery free database has been used.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
