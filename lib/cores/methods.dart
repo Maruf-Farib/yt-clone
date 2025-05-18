@@ -45,9 +45,9 @@ Future<String> putFileInStorage(file, number, fileType) async {
 }
 
 Future putFileInCloudinary({required file, required String type}) async {
-  final url = Uri.parse('https://api.cloudinary.com/v1_1/dvc8dp1qy/upload');
+  final url = Uri.parse('https://api.cloudinary.com/v1_1/<CLOUDINARY_ID>/upload');
   final request = http.MultipartRequest('POST', url)
-    ..fields['upload_preset'] = 'sikkmfsk'
+    ..fields['upload_preset'] = '<UPLOAD_PRESET>'
     ..fields['asset_folder'] = 'public/$type/'
     ..files.add(await http.MultipartFile.fromPath('file', file!.path));
   final response = await request.send();
