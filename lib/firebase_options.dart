@@ -50,16 +50,16 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyClqTpiYhIE6DuTKRcJL7D1DrqwWobjfkU',
+    apiKey: '<API_KEY>',
     appId: '1:114209863920:web:2a52b4c3244ff0f5ddea35',
     messagingSenderId: '114209863920',
-    projectId: 'clone-87c92',
+    projectId: '<clone-87c92>',
     authDomain: 'clone-87c92.firebaseapp.com',
     storageBucket: 'clone-87c92.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAM1T59gYD4YIvKhnHEzECQhZGZQlI9DsA',
+    apiKey: '<API_KEY>',
     appId: '1:114209863920:android:ffbe2440c5fb4071ddea35',
     messagingSenderId: '114209863920',
     projectId: 'clone-87c92',
