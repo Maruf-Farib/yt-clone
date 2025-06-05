@@ -1,14 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yt/features/auth/models/user_data_model.dart';
+import 'package:yt/features/auth/provider/current_user_provider.dart';
 import 'package:yt/features/upload/long_video/video_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class Post extends StatelessWidget {
+class Post extends ConsumerWidget {
   final VideoModel video;
   const Post({super.key, required this.video});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<UserDataModel> userModel =
+        ref.watch(anyUserDataProvider(video.userId));
+    final user = userModel.whenData((value) => value);
     return Column(
       children: [
         CachedNetworkImage(imageUrl: video.thumbnail),
@@ -19,6 +25,8 @@ class Post extends StatelessWidget {
               child: CircleAvatar(
                 backgroundColor: Colors.grey,
                 radius: 20,
+                backgroundImage:
+                    CachedNetworkImageProvider(user.value!.profilePic),
               ),
             ),
             Expanded(
@@ -48,7 +56,7 @@ class Post extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Ahmad Amini',
+                user.value!.displayName,
                 style: const TextStyle(
                   color: Colors.blueGrey,
                 ),

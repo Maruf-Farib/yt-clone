@@ -25,3 +25,8 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+hs_err_pid12096.log
+android/hs_err_pid8944.log
+android/hs_err_pid12356.log
+android/hs_err_pid16132.log
+android/replay_pid12356.log
