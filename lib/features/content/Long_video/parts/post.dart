@@ -22,7 +22,9 @@ class Post extends ConsumerWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return Video();
+              return Video(
+                video: video,
+              );
             },
           ),
         );
@@ -38,7 +40,7 @@ class Post extends ConsumerWidget {
                   backgroundColor: Colors.grey,
                   radius: 20,
                   backgroundImage:
-                      CachedNetworkImageProvider(user.value!.profilePic),
+                      CachedNetworkImageProvider(user.value?.profilePic ?? ''),
                 ),
               ),
               Expanded(
@@ -68,7 +70,7 @@ class Post extends ConsumerWidget {
             child: Row(
               children: [
                 Text(
-                  user.value!.displayName,
+                  user.value?.displayName ?? 'No Name',
                   style: const TextStyle(
                     color: Colors.blueGrey,
                   ),
