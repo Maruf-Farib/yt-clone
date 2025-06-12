@@ -1,14 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 import 'package:yt/cores/colors.dart';
+import 'package:yt/cores/screens/error_page.dart';
 import 'package:yt/cores/screens/loader.dart';
 import 'package:yt/cores/widgets/flat_button.dart';
 import 'package:yt/features/auth/models/user_data_model.dart';
 import 'package:yt/features/auth/provider/current_user_provider.dart';
+import 'package:yt/features/content/Long_video/parts/post.dart';
 import 'package:yt/features/content/Long_video/widgets/video_externel_buttons.dart';
 import 'package:yt/features/upload/long_video/video_model.dart';
 
@@ -27,11 +30,10 @@ class _VideoState extends ConsumerState<Video> {
   @override
   void initState() {
     super.initState();
-    _controller =
-        VideoPlayerController.networkUrl(Uri.parse(widget.video.videoUrl))
-          ..initialize().then((_) {
-            setState(() {});
-          });
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.video.videoUrl))
+      ..initialize().then((_) {
+        setState(() {});
+      });
   }
 
   toggleVideoPlayer() {
@@ -60,8 +62,7 @@ class _VideoState extends ConsumerState<Video> {
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<UserDataModel> user =
-        ref.watch(anyUserDataProvider(widget.video.userId));
+    final AsyncValue<UserDataModel> user = ref.watch(anyUserDataProvider(widget.video.userId));
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
@@ -178,9 +179,7 @@ class _VideoState extends ConsumerState<Video> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8),
                     child: Text(
-                      widget.video.views == 0
-                          ? "No view"
-                          : "${widget.video.views} views",
+                      widget.video.views == 0 ? "No view" : "${widget.video.views} views",
                       style: const TextStyle(
                         fontSize: 13.4,
                         color: Color(0xff5F5F5F),
@@ -201,8 +200,7 @@ class _VideoState extends ConsumerState<Video> {
                   CircleAvatar(
                     radius: 14,
                     backgroundColor: Colors.grey,
-                    backgroundImage:
-                        CachedNetworkImageProvider(user.value!.profilePic),
+                    backgroundImage: CachedNetworkImageProvider(user.value!.profilePic),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -299,6 +297,29 @@ class _VideoState extends ConsumerState<Video> {
                   ],
                 ),
               ),
+            ),
+            StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('videos')
+                  .where('videoId', isNotEqualTo: widget.video.videoId)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return ErrorPage();
+                } else if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Loader();
+                }
+                final videosMap = snapshot.data!.docs;
+                final videos = videosMap.map((video) => VideoModel.fromMap(video.data())).toList();
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: videos.length,
+                  itemBuilder: (context, index) {
+                    return Post(video: videos[index]);
+                  },
+                );
+              },
             ),
           ],
         ),
