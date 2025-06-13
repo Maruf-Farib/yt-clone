@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:yt/features/upload/comments/comment_model.dart';
+
+class CommentTile extends StatelessWidget {
+  final CommentModel comment;
+  const CommentTile({super.key, required this.comment});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 7),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 7),
+                child: CircleAvatar(
+                  radius: 15,
+                  backgroundColor: Colors.grey,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                comment.displayName,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              const Text(
+                "a moment ago",
+                style: TextStyle(
+                  color: Colors.blueGrey,
+                ),
+              ),
+              const Spacer(),
+              const Icon(Icons.more_vert),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              right: MediaQuery.sizeOf(context).width * 0.56,
+            ),
+            child: Text(comment.commentText),
+          ),
+        ],
+      ),
+    );
+  }
+}
