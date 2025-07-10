@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:yt/features/upload/comments/comment_model.dart';
 
@@ -18,6 +19,7 @@ class CommentTile extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 15,
                   backgroundColor: Colors.grey,
+                  backgroundImage: CachedNetworkImageProvider(comment.profilePic),
                 ),
               ),
               const SizedBox(width: 8),

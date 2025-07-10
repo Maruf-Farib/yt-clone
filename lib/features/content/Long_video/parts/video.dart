@@ -13,6 +13,7 @@ import 'package:yt/features/auth/models/user_data_model.dart';
 import 'package:yt/features/auth/provider/current_user_provider.dart';
 import 'package:yt/features/content/Long_video/parts/post.dart';
 import 'package:yt/features/content/Long_video/widgets/video_externel_buttons.dart';
+import 'package:yt/features/content/comment/comment_sheet.dart';
 import 'package:yt/features/upload/long_video/video_model.dart';
 
 class Video extends ConsumerStatefulWidget {
@@ -295,6 +296,30 @@ class _VideoState extends ConsumerState<Video> {
                       ),
                     ),
                   ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+              child: InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return CommentSheet(
+                        video: widget.video,
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                  ),
                 ),
               ),
             ),
